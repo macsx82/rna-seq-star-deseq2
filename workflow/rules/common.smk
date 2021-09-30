@@ -15,7 +15,7 @@ samples = (
 
 def get_final_output():
     final_output = expand(
-        "results/diffexp/{contrast}.diffexp.tsv",
+        "results/gsea/{contrast}.gsea-kegg.pdf",
         contrast=config["diffexp"]["contrasts"],
     )
     return final_output
@@ -121,6 +121,15 @@ def get_map_reads_input_R2(wildcards):
         return ("results/merged/{sample}_R2.fastq.gz",)
     return ""
 
+def get_rsem_output_all_units(wildcards):
+    res = []
+    for unit in units.itertuples():
+        res.append(
+            "results/rsem/{}-{}.genes.results".format(
+                unit.sample_name, unit.unit_name
+            )
+        )
+    return res
 
 def get_star_output_all_units(wildcards, fi="counts"):
     if fi == "bam":
@@ -140,6 +149,14 @@ def get_star_output_all_units(wildcards, fi="counts"):
         )
     return res
 
+def get_star_transcriptome(wildcards):
+    if is_paired_end(wildcards.sample):
+        lib = "pe"
+    else:
+        lib = "se"
+    return "results/star/{}/{}-{}/Aligned.toTranscriptome.out.bam".format(
+        lib, wildcards.sample, wildcards.unit
+    )
 
 def get_star_bam(wildcards):
     if is_paired_end(wildcards.sample):
