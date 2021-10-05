@@ -32,7 +32,7 @@
 
 ## About
 
-This workflow performs a differential gene expression analysis with STAR and Deseq2.
+This workflow performs a differential gene expression analysis with STARv2, RSEM and Deseq2; parameters and workflow establisehd by the PughLab (https://github.com/pughlab).
 It has been customized to work on the HPC4Health Slurm cluster and includes extra analysis to do genotype matching.
 
 Link to the original snakemake workflow: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2)
