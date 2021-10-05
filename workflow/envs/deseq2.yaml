@@ -5,7 +5,9 @@ channels:
 dependencies:
   - bioconductor-deseq2 =1.30.0
   - bioconductor-apeglm =1.12.0
+  - r-rvcheck =0.1.8
   - bioconductor-org.hs.eg.db
+  - bioconductor-org.mm.eg.db
   - bioconductor-kegg.db
   - bioconductor-go.db
   - bioconductor-clusterprofiler
@@ -13,4 +15,4 @@ dependencies:
   - bioconductor-category
   - bioconductor-gostats
   - r-ggplot2
-  - r-ggridges 
+  - r-ggridges
