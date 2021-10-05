@@ -64,15 +64,14 @@ git clone git@github.com:mcgahalab/rna-seq-star-deseq2.git
 The basic idea of this workflow is that we set up all the conda-envs using a set output path in our home directory. However, to run the `--create-env-only` command, we need to have a directory set up with all the files needed to execute the entire workflow. In the future, I will add a script to do this automatically, but for now, it must be made manually:
 
 ```
-wflowdir='~/workflow/rna-seq-star-deseq2'
 mkdir -p ~/workflows/intialize/rnaseq-star
 cd ~/workflows/intialize/rnaseq-star
 
 mkdir config data resources
-ln -s $(readlink -f ${wflowdir}/scripts) .
-ln -s $(readlink -f ${wflowdir}/slurm) .
+ln -s $(readlink -f /cluster/home/selghamr/workflows/rna-seq-star-deseq2/scripts) .
+ln -s $(readlink -f $/cluster/home/selghamr/workflows/rna-seq-star-deseq2/slurm) .
 
-cp ${wflowdir}/config/* config/
+cp /cluster/home/selghamr/workflows/rna-seq-star-deseq2/config/* config/
 ```
 At this step, you will want to populate your `config/units.tsv` and `config/samples.tsv` with some junk nonsensical data, then you'll want to `touch` all the files into creation in the `data/` directory. For example, if you choose not to modify the `units.tsv` or `samples.tsv` (it should be fine), you can touch the following files in your data dir:
 
@@ -110,8 +109,8 @@ workdir: "/path/to/workflows/intialize/rnaseq-star"
 Once the Snakefile workdir path has been changed, you can run the entire snakemake workflow using `conda-create-envs-only`:
 
 ```
-cd ~/workflow/rna-seq-star-deseq2
-condaprefix=$(readlink -f .snakemake/conda)
+cd ~/workflows/rna-seq-star-deseq2
+condaprefix=$(readlink -f .)"/.snakemake/conda"
 
 snakemake \
 --use-conda \
@@ -137,8 +136,8 @@ workdir: "/path/to/group_directory/project"
 
 The `scheduler.sh` script runs the following command in a 5-day long job, with its main purpose to track the job queue and job submission on the slurm cluster.
 ```
-cd /cluster/home/quever/workflows/rna-seq-star-deseq2
-condaprefix='/cluster/home/quever/workflows/rna-seq-star-deseq2/.snakemake/conda'
+cd /cluster/home/selghamr/workflows/rna-seq-star-deseq2
+condaprefix='/cluster/home/selghamr/workflows/rna-seq-star-deseq2/.snakemake/conda'
 
 snakemake \
 --jobs 6 \
