@@ -38,7 +38,7 @@ It has been customized to work on the HPC4Health Slurm cluster and includes extr
 Link to the original snakemake workflow: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2)
 
 ## Updates
-* [2021-10-05]: Added first functional RNAseq workflow, from fastq files to STAR alignment, RSEM counts, DESeq2 diffexp, and clusterProfiler GSEA and over-representation analysis
+* [2021-10-05]: (v1.0.0) Added first functional RNAseq workflow, from fastq files to STAR alignment, RSEM counts, DESeq2 diffexp, and clusterProfiler GSEA and over-representation analysis
 * [TODO]: Add a script to initiate a blank working copy for building envs
 * [TODO]: Implemented first working copy of genotype identification
 
