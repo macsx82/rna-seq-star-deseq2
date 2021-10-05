@@ -244,7 +244,7 @@ sbatch scheduler.sh
   * I don't know the source of this error, but it seems to be specific to rsem=3.3.3 from conda and fixed in the 3.3.0 version (https://github.com/deweylab/RSEM/issues/126).  The rsem-calculate-expressions environment.yaml uses the rsem=3.3.3 and will require manually editting the file to change the rsem file `/path/to/snakemake-wrappers/0.77.0/bio/rsem/calculate-expression/environment.yaml`. However, to date, I haven't been able to give rsem=3.3.0 installed in my conda env due to a glibc=2.17.0 error.  As such, there is a temporary fix set up where I use the rsem=3.3.0 installed on H4H, accessed via module load, to run that rule.
 
 3. CreateCondaEnvironmentException related to multiqc/environment.yaml:
-  * This issue is related to the bioconda installation of `mutliqc==1.7`. The simplest method to fix this issue is to change the environment.yaml of `/path/to/snakemake-wrappers/0.77.0/bio/multiqc/environment.yaml` to place conda-forge ahead of bioconda. Alternatively, you can modify the associated yaml file in `/path/to/rna-seq-star-deseq2/.snakemake/conda/XYZ.yaml` to place conda-forge ahead of the bioconda env, and then force the installation using the following code:
+  * This issue is related to the bioconda installation of `mutliqc==1.7`. The simplest method to fix this issue is to change the environment.yaml of `/path/to/snakemake-wrappers/0.77.0/bio/multiqc/environment.yaml` to place conda-forge ahead of bioconda. Alternatively, you can modify the associated yaml file in `/path/to/rna-seq-star-deseq2/.snakemake/conda/XYZ.yaml` to place conda-forge ahead of the bioconda env, and then force the installation using the following code, and then change the yaml file back to its original state:
 ```
 id='XYZ'   #e.g. '1943aee1fff2ccaea034ffd15210faca'
 targetdir=$(readlink -f .)
@@ -255,4 +255,3 @@ mkdir ${env_path}
 conda env create --file ${target_env_file} --prefix ${env_path}
 touch ${env_path}/env_setup_done ${env_path}/env_setup_start
 ```
-  and then change the yaml file back so bioconda is above conda-forge
