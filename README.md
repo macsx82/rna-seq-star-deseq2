@@ -22,7 +22,10 @@
       <a href="#dev-setup">Dev Setup</a>
     </li>
     <li>
-      <a href="#workflow-dag">Workflow DAG</a>
+      <a href="#workflow-dag">Workflow-DAG</a>
+    </li>
+    <li>
+      <a href="#known-issues">Known-Issues</a>
     </li>
   </ol>
 </details>
@@ -232,4 +235,10 @@ conda activate snakemake
 sbatch scheduler.sh
 ```
 
-## Workflow DAG
+## Workflow-DAG
+## Known-Issues
+1. rsem-calculate-expressions keeps using single-end mode and throws errors when I use paired-end
+  The snakemake-wrapper for `calculate-expression` looks for a param called `paired-end` in your rule. However, the "-" makes this an incompatible param name and thus is unusable.  Instead, you need to change the `wrapper.py` for the calculate-expressions wrapper to look for `paired_end` instead. Thus, change `line 19` in `/path/to/snakemake-wrappers/0.77.0/bio/rsem/calculate-expression/wrapper.py` from paired-end to paired_end.  The rule set up right now uses the paired_end param already.
+  
+2. rsem-calculate-expressions throws an rsem-tbam2gbam error about two mates aligning to two different transcripts after ~1-2 hrs of runtime:
+  * I don't know the source of this error, but it seems to be specific to rsem=3.3.3 from conda and fixed in the 3.3.0 version (https://github.com/deweylab/RSEM/issues/126).  The rsem-calculate-expressions environment.yaml uses the rsem=3.3.3 and will require manually editting the file to change the rsem file `/path/to/snakemake-wrappers/0.77.0/bio/rsem/calculate-expression/environment.yaml`. However, to date, I haven't been able to give rsem=3.3.0 installed in my conda env due to a glibc=2.17.0 error.  As such, there is a temporary fix set up where I use the rsem=3.3.0 installed on H4H, accessed via module load, to run that rule.
