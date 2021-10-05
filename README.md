@@ -16,7 +16,10 @@
       <a href="#updates">Updates</a>
     </li>
     <li>
-      <a href="#setting-up">Setting up</a>
+      <a href="#quick-setup">Quick Setup</a>
+    </li>  
+    <li>
+      <a href="#dev-setup">Dev Setup</a>
     </li>
     <li>
       <a href="#workflow-dag">Workflow DAG</a>
@@ -35,12 +38,11 @@ It has been customized to work on the HPC4Health Slurm cluster and includes extr
 Link to the original snakemake workflow: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2)
 
 ## Updates
-
+* [2021-10-05]: Added first functional RNAseq workflow, from fastq files to STAR alignment, RSEM counts, DESeq2 diffexp, and clusterProfiler GSEA and over-representation analysis
 * [TODO]: Add a script to initiate a blank working copy for building envs
 * [TODO]: Implemented first working copy of genotype identification
 
-## Setting up
-
+## Quick-Setup
 As states above, this workflow is set up to work on the H4H cluster. As such, there are major limitations when working on this system. For instance, only the home directory contains internet access while typically, all analysis needs to be conducted on the project directories which can only be accessed on nodes with no internet access. Additionally, the home directory contains a very limited amount of storage space.
 
 ### 0. Install Snakemake as a conda env (Build node)
@@ -53,12 +55,86 @@ mamba create -c conda-forge -c bioconda -n snakemake snakemake
 ### 1. Clone the workflow (Build node)
 We first want to clone the workflow to our workflow directory in our home. This requires internet access, so be sure to log in to the build node first and activate your snakemake conda env:
 ```
-salloc --partition=build -c 1 -t 2:0:0 --mem 2G
-conda activate snakemake
-
 cd ~/workflows
 git clone git@github.com:mcgahalab/rna-seq-star-deseq2.git
 ```
+
+### 2. Setup your project directory (interactive-node)
+Next we want to set up the project directory, this requires some symlinking and formatting of the file names.
+Within your project directory, you will need to create the following directories:
+```
+mkdir config data logs resources results
+```
+
+and we want to symlink the following directories:
+```
+workflowpath='/path/to/rna-seq-star-deseq2/
+ln -s ${workflowpath}/workflow/scripts .
+ln -s ${workflowpath}/slurm .
+```
+
+#### 2.a) Setup the data directory
+While the data directory shouldnt have any limitations on the sample naming convention, my files usually take on the following format:
+```
+[sample].R1.merged.fastq.gz  #single-end
+[sample].R1.merged.fastq.gz  #paired-end
+[sample].R2.merged.fastq.gz  #paired-end
+e.g. DAB-C-1_S10.R1.merged.fastq.gz 
+```
+
+#### 2.b) Setup the config directory
+The config directory contains 3 major files:
+
+  * `config.yaml`: Contains all the parameters for running the workflow, specific to the project. Make sure to set up all the absolute paths to the reference files where appropriate. If you want to test multiple conditions for diffexp or alter the deseq2 modelling, change the model parameter. The conditions for testing need to be consistent with your `samples.tsv`:
+```
+diffexp:
+  # contrasts for the deseq2 results method
+  contrasts:
+    dabc-vs-dabg:
+      - DAB-C
+      - DAB-G
+    dmsoc-vs-dmso-g:
+      - DMSO-C
+      - DMSO-G
+  model: ~condition + date
+```
+  * `samples.tsv`: This file contains your sample sheet with the different conditions. This does not have to be in synch with your actual fastq file IDs:
+```
+sample_name	condition
+DAB-C-2_S11	DAB-C
+DAB-C-3_S12	DAB-C
+DAB-G-1_S13	DAB-G
+```
+  * `units.tsv`: This file contains the relative paths to your FASTQ files. The sample names have to be consistent with your `samples.tsv` file. If single-end RNA files are given, only populate the fq1 column.
+```
+sample_name	unit_name	fq1	fq2	sra	adapters	strandedness
+
+DAB-C-2_S11	merged	data/DAB-C-2_S11.R1.merged.fastq.gz	data/DAB-C-2_S11.R2.merged.fastq.gz
+DAB-C-3_S12	merged	data/DAB-C-3_S12.R1.merged.fastq.gz	data/DAB-C-3_S12.R2.merged.fastq.gz
+DAB-G-1_S13	merged	data/DAB-G-1_S13.R1.merged.fastq.gz	data/DAB-G-1_S13.R2.merged.fastq.gz
+```
+
+### 3. Running the workflow
+With the project directory created and the configuration file, samples file, and units file all setup, we are ready to run the workflow. At this point, we need to navigate back to the workflow directory (`/path/to/rna-seq-star-deseq2`). The current `scheduler.sh` is set to use my conda environments and snakemake-wrappers. However, these are subject to change with no notice, based on ongoing development. If you want to build your own environments and wrappers, refer to the **Dev-Setup** section.  
+
+You will need to configure your `workflows/Snakefile` file and change the `workdir:` path to your project directory.
+```(base) 40373Mb [quever@node47 rna-seq-star-deseq2]$ head workflow/Snakefile 
+# this container defines the underlying OS for each job when using the workflow
+# with --use-conda --use-singularity
+#container: "docker://continuumio/miniconda3"
+
+workdir: "/path/to/projectdir"
+```
+
+Beyond this change, you should be able to execute the workflow by activating snakemake, then checking the dry-run using `snakemake -n`.  If the dry-run looks good with no errors, submit the jobs using `sbatch scheduler.sh`.  If you need to increase memory/cpu/time requirements for certain rules, you can modify these in the `slurm/cluster.json` file.
+
+
+
+## Dev-Setup
+
+
+### 1. Follow Quick-Setup steps 0-2
+Follow the aforementioned steps to setup your project directory and snakemake workflow.
 
 ### 2. Setup a blank analysis directory (Build/Project node)
 The basic idea of this workflow is that we set up all the conda-envs using a set output path in our home directory. However, to run the `--create-env-only` command, we need to have a directory set up with all the files needed to execute the entire workflow. In the future, I will add a script to do this automatically, but for now, it must be made manually:
@@ -83,10 +159,8 @@ touch  A.1.fastq.gz A.2.fastq.gz A2.1.fastq.gz A2.2.fastq.gz B.1.fastq.gz B.2.fa
 
 While not listed here, many of your reference files (e.g. `genoma.fa`) will be in your Project directories, which you cannot access from the build node.  Be sure to reconfigure the `config/config.yaml` to point to reference files that are in the home directory (`resources/` directory). As nothing will actually be run, you can simply `touch` these files for the sake of satisfying the snakemake file checker.
 
-### 3. Setup your project directory (Project node)
-Similary to Step 2, you will want to set up your project directory in your group directory using the same structure. However, this time you will need to add a meaningful `config/units.tsv`, `config/samples.tsv`, `config/config.yaml`, and populate your `data/` directory with symlinks to all the fastqs you will be working with.
 
-### 4. Download the snakemake-wrappers (Build node)
+### 3. Download the snakemake-wrappers (Build node)
 Again, while in the build node, you can only access the home directory. Because of this, you will need to have a local copy of `snakemake-wrappers` in your home directory in order to build your `conda-envs`
 
 This workflow requires: `v0.75.0` and `0.59.2`.
@@ -98,7 +172,7 @@ Basically, you will need to add a path that will have the following structure:
 /path/to/snakemake-wrappers/[TAG]/bio/
 ```
 
-### 5. Building the conda-envs (Build node)
+### 4. Building the conda-envs (Build node)
 Now that you have your "intialize" and your "project" directory set up, you can start building your conda environments required for the workflow.
 
 Before you build your conda-envs, you'll need to switch the `workdir:` path in your `workflow/Snakefile`:
@@ -126,7 +200,7 @@ snakemake \
 
 The idea behind this is that snakemake will install the conda envs to `.snakemake/conda`. It creates a hash to label that environment it builds. However, the hash is generated based on the `conda-prefix` and the hash of the `env.yaml` that it is building. As long as the `conda-prefix` and `env.yaml` remain unchanged, it will use the pre-existing environment found in `.snakemake/conda/[HASH]`
 
-### 6. Run your workflow (Build/Project node)
+### 5. Run your workflow (Build/Project node)
 Once the workflow has been set up and the environments have been created, you can finally run your pre-configured workflow on your project directory. You will need to reconfigure some paths in your `scheduler.sh` script. Be sure to activate your `snakemake` env before queuing the scheduler.
 
 Before you run your workflow on your project directory, you'll need to switch the `workdir:` path in your `workflow/Snakefile`:
