@@ -77,8 +77,8 @@ rule gsea:
     params:
         genome=config['ref']['species'],
         contrast=get_contrast,
-        minbase=config["gsea"]["min_base_mean"],
-        maxp=config["gsea"]["max_p"],
+        minbase=config['gsea']["min_base_mean"],
+        maxp=config['gsea']["max_p"],
     conda:
         "../envs/deseq2.yaml"
     log:
