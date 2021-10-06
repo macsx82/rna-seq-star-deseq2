@@ -16,9 +16,9 @@ ref:
 
 ref_index:
   bwa-index: "ref/genomes/human/GRCh38/BWAIndex"
-  genome: "ref/genomes/human/GRCh38/genome.fasta"
+  genome: "ref/genomes/human/GRCh38/genome.fa"
   # This reference file is made from rsem-prepare-reference, it will generate the reference.seq is not found
-  rsem: "/cluster/projects/mcgahalab/ref/genomes/human/GRCh38/rsemIndex/reference"
+  rsem: "ref/genomes/human/GRCh38/rsemIndex/reference"
 
 trimming:
   # Should not be trimming RNAseq data, especially for STAR2, I haven't tested True
@@ -35,7 +35,7 @@ pca:
     - condition
 
 genotyping:
-  target: "ref/dbsnp/b151_GRCh38p7/bed/common_all_20180418.bed"
+  target: "ref/dbsnp/GRCh38/b151/dbSNP_GRCh38p7_b151_common.bed"
   # Currently non-functional, does not use these parameters at all
   min_n: 2
 
@@ -60,7 +60,7 @@ gsea:
   max_p: 0.05
 
 star:
-  star-genome: "ref/genomes/human/GRCh38/STARindex/sjdb_74"
-  gtf: "ref/genomes/human/GRCh38/GTF/genome.gtf"
+  star-genome: "ref/STAR_GRCh38_83"
+  gtf: "ref/STAR_GRCh38_83/Homo_sapiens.GRCh38.83.gtf"
   # Extra params added for STARv2, there are already hardcoded parames in workflow/rules/align.smk
   params: ""
