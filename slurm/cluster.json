@@ -17,9 +17,7 @@ align_se:
   cpus-per-task : 12
   mem : 59G
   partition : 'himem'
-<<<<<<< HEAD
   time : 1-00:00:00
-=======
   time : 23:00:00
 
 align_pe:
@@ -34,4 +32,3 @@ rseqc_readdup:
 calculate_expression:
   time : 1-00:00:00
   mem : 16G
->>>>>>> mcgahalab-master
