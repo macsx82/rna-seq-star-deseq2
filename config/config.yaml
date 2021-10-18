@@ -61,6 +61,6 @@ gsea:
 
 star:
   star-genome: "ref/STAR_GRCh38_83"
-  gtf: "ref/STAR_GRCh38_83/Homo_sapiens.GRCh38.83.gtf"
+  gtf: "/cluster/projects/cesconlab/References/STAR/GRCh38/GTF/genome.gtf"
   # Extra params added for STARv2, there are already hardcoded parames in workflow/rules/align.smk
   params: ""

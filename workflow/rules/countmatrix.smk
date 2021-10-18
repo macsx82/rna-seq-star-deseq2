@@ -16,9 +16,9 @@ rule prepare_reference:
   input:
     reference_genome=config['ref_index']['genome'],
   output:
-    seq="ref/reference.seq",
-    grp="ref/reference.grp",
-    ti="ref/reference.ti",
+    seq="ref/grch38.v31.seq",
+    grp="ref/grch38.v31.grp",
+    ti="ref/grch38.v31.ti",
   params:
     refpath=config['ref_index']['rsem'],
     extra="--gtf {}".format(config["star"]["gtf"]),
