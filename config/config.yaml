@@ -18,7 +18,7 @@ ref_index:
   bwa-index: "ref/genomes/human/GRCh38/BWAIndex"
   genome: "ref/genomes/human/GRCh38/genome.fa"
   # This reference file is made from rsem-prepare-reference, it will generate the reference.seq is not found
-  rsem: "ref/RSEM/GRCh38/v31/v31"
+  rsem: "ref/RSEM/GRCh38/v31/grch38.v31"
 
 trimming:
   # Should not be trimming RNAseq data, especially for STAR2, I haven't tested True
