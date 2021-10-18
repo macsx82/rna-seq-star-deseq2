@@ -16,9 +16,9 @@ rule prepare_reference:
   input:
     reference_genome=config['ref_index']['genome'],
   output:
-    seq="ref/grch38.v31.seq",
-    grp="ref/grch38.v31.grp",
-    ti="ref/grch38.v31.ti",
+    seq="ref/reference.seq",
+    grp="ref/reference.grp",
+    ti="ref/reference.ti",
   params:
     refpath=config['ref_index']['rsem'],
     extra="--gtf {}".format(config["star"]["gtf"]),
@@ -54,7 +54,7 @@ rule prepare_reference:
 rule calculate_expression:
   input:
     bam=get_star_transcriptome,
-    reference="ref/grch38.v31.seq",
+    reference="ref/reference.seq",
   output:
     genes_results="results/rsem/{sample}-{unit}.genes.results",
     isoforms_results="results/rsem/{sample}-{unit}.isoforms.results",
@@ -67,7 +67,7 @@ rule calculate_expression:
   log:
     "logs/rsem/calculate_expression/{sample}-{unit}.log",
   shell:
-    "ref=$(echo {input.reference} | cut -d . -f -2); "
+    "ref=$(echo {input.reference} | sed 's/\\..*//'); "
     "module load rsem/1.3.0; "
     "rsem-calculate-expression "
     "--num-threads 1 --bam "
