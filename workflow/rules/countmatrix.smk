@@ -54,7 +54,7 @@ rule prepare_reference:
 rule calculate_expression:
   input:
     bam=get_star_transcriptome,
-    reference="ref/reference.seq",
+    reference="ref/grch38.v31.seq",
   output:
     genes_results="results/rsem/{sample}-{unit}.genes.results",
     isoforms_results="results/rsem/{sample}-{unit}.isoforms.results",
