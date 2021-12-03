@@ -18,16 +18,9 @@ include: "rules/genotyping.smk"
 
 ##### target rules #####
 
-
 rule all:
     input:
         "results/pca.pdf",
-        #"../report/diffexp.rst",
-        "results/deseq2/normcounts.tsv",
-        "results/counts/all.tsv",
-        expand("results/star/se/{sample}-merged/Aligned.sortedByCoord.out.bam", sample=samples.index),
+        get_final_output(),
+        "results/counts/all_tpm.tsv",
         "results/qc/multiqc_report.html",
-        expand("results/genotyping/{sample}-merged.allelicCounts.tsv", sample=samples.index),
-
-        #expand("results/trimmed/{sample}_merged_single.fastq.gz", sample=samples.index)
-        #get_final_output(),
