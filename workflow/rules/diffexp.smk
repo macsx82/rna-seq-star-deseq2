@@ -36,7 +36,7 @@ rule pca:
     input:
         "results/deseq2/all.rds",
     output:
-        report("results/pca.svg", "../report/pca.rst"),
+        report("results/pca.pdf", "../report/pca.rst"),
     params:
         pca_labels=config["pca"]["labels"],
     conda:
@@ -54,9 +54,10 @@ rule deseq2:
         table=report(
             "results/diffexp/{contrast}.diffexp.tsv", "../report/diffexp.rst"
         ),
-        ma_plot=report("results/diffexp/{contrast}.ma-plot.svg", "../report/ma.rst"),
+        ma_plot=report("results/diffexp/{contrast}.ma-plot.pdf", "../report/ma.rst"),
     params:
         contrast=get_contrast,
+        species=config['ref']['species'],
     conda:
         "../envs/deseq2.yaml"
     log:
@@ -69,11 +70,9 @@ rule gsea:
     input:
         "results/diffexp/{contrast}.diffexp.tsv",
     output:
-        gseakegg_table="results/gsea/{contrast}.gsea-kegg.tsv",
-        gseakegg_pdf="results/gsea/{contrast}.gsea-kegg.pdf",
-        gseago_table="results/gsea/{contrast}.gsea-go.tsv",
-        gseago_pdf="results/gsea/{contrast}.gsea-go.pdf",
-        go="results/gsea/{contrast}.go.tsv",
+        ora_tbl=report("results/gsea/{contrast}.ora.tsv", "../report/ora-go.rst"),
+        gsea_tbl=report("results/gsea/{contrast}.gsea.tsv", "../report/gsea-kegg.rst"),
+        gsea_pdf="results/gsea/{contrast}.gsea.pdf",
     params:
         genome=config['ref']['species'],
         contrast=get_contrast,
