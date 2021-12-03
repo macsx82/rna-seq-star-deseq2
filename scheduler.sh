@@ -7,8 +7,8 @@
 #SBATCH -p all
 #SBATCH --mem=2gb
 
-cd /cluster/home/quever/workflows/rna-seq-star-deseq2
-condaprefix='/cluster/home/quever/workflows/rna-seq-star-deseq2/.snakemake/conda'
+cd /cluster/home/selghamr/workflows/rna-seq-star-deseq2
+condaprefix='/cluster/home/selghamr/workflows/rna-seq-star-deseq2/.snakemake/conda'
 
 snakemake \
 --jobs 6 \
@@ -18,5 +18,5 @@ snakemake \
 --use-conda \
 --use-singularity \
 --conda-prefix ${condaprefix} \
---wrapper-prefix 'file:///cluster/home/quever/downloads/snakemake-wrappers/' \
+--wrapper-prefix 'file:///cluster/home/selghamr/snakemake_wrappers/' \
 --rerun-incomplete
