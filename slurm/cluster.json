@@ -27,7 +27,9 @@ align_pe:
   time : 1-00:00:00
 
 rseqc_readdup:
-  mem : 25G
+  mem : 59G
+  partition : 'himem'
+  time : 1-00:00:00
 
 calculate_expression:
   time : 1-00:00:00
