@@ -59,7 +59,7 @@ mamba create -c conda-forge -c bioconda -n snakemake snakemake
 We first want to clone the workflow to our workflow directory in our home. This requires internet access, so be sure to log in to the build node first and activate your snakemake conda env:
 ```
 cd ~/workflows
-git clone git@github.com:mcgahalab/rna-seq-star-deseq2.git
+git clone git@github.com:Cesconlab/rna-seq-star-deseq2.git
 ```
 
 ### 2. Setup your project directory (interactive-node)
