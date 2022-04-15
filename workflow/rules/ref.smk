@@ -9,8 +9,10 @@ rule get_genome:
         build=config["ref"]["build"],
         release=config["ref"]["release"],
     cache: True
+    resources:
+        mem_mb=2000,
     wrapper:
-        "0.59.2/bio/reference/ensembl-sequence"
+        "v1.3.2/bio/reference/ensembl-sequence"
 
 
 rule get_annotation:
@@ -25,8 +27,10 @@ rule get_annotation:
     cache: True
     log:
         "logs/get_annotation.log",
+    resources:
+        mem_mb=2000,
     wrapper:
-        "0.59.2/bio/reference/ensembl-annotation"
+        "v1.3.2/bio/reference/ensembl-annotation"
 
 
 rule genome_faidx:
@@ -37,8 +41,12 @@ rule genome_faidx:
     log:
         "logs/genome-faidx.log",
     cache: True
+    resources:
+        mem_mb=20000,
+    envmodules:
+        "samtools"
     wrapper:
-        "0.59.2/bio/samtools/faidx"
+        "v1.3.2/bio/samtools/faidx"
 
 
 rule bwa_index:
@@ -48,11 +56,15 @@ rule bwa_index:
         multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
+    params:
+        algorithm="bwtsw",
     resources:
-        mem_mb=369000,
+        mem_mb=40000,
     cache: True
+    envmodules:
+        "bwa"
     wrapper:
-        "0.59.2/bio/bwa/index"
+        "v1.3.2/bio/bwa/index"
 
 
 rule star_index:
@@ -67,5 +79,7 @@ rule star_index:
     log:
         "logs/star_index_genome.log",
     cache: True
+    resources:
+        mem_mb=20000,
     wrapper:
-        "0.64.0/bio/star/index"
+        "v1.3.2/bio/star/index"

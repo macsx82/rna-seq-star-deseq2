@@ -1,6 +1,4 @@
 ## RSEQC
-
-
 rule rseqc_gtf2bed:
     input:
         config["star"]["gtf"],
@@ -11,6 +9,8 @@ rule rseqc_gtf2bed:
         "logs/rseqc_gtf2bed.log",
     conda:
         "../envs/gffutils.yaml"
+    resources:
+        mem_mb=2000,
     script:
         "../scripts/gtf2bed.py"
 
@@ -30,6 +30,8 @@ rule rseqc_junction_annotation:
         prefix=lambda w, output: output[0].replace(".junction.bed", ""),
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "junction_annotation.py {params.extra} -i {input.bam} -r {input.bed} -o {params.prefix} "
         "> {log[0]} 2>&1"
@@ -50,6 +52,8 @@ rule rseqc_junction_saturation:
         prefix=lambda w, output: output[0].replace(".junctionSaturation_plot.pdf", ""),
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "junction_saturation.py {params.extra} -i {input.bam} -r {input.bed} -o {params.prefix} "
         "> {log} 2>&1"
@@ -66,6 +70,8 @@ rule rseqc_stat:
         "logs/rseqc/rseqc_stat/{sample}-{unit}.log",
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "bam_stat.py -i {input} > {output} 2> {log}"
 
@@ -82,6 +88,8 @@ rule rseqc_infer:
         "logs/rseqc/rseqc_infer/{sample}-{unit}.log",
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "infer_experiment.py -r {input.bed} -i {input.bam} > {output} 2> {log}"
 
@@ -100,6 +108,8 @@ rule rseqc_innerdis:
         prefix=lambda w, output: output[0].replace(".inner_distance.txt", ""),
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "inner_distance.py -r {input.bed} -i {input.bam} -o {params.prefix} > {log} 2>&1"
 
@@ -116,6 +126,8 @@ rule rseqc_readdis:
         "logs/rseqc/rseqc_readdis/{sample}-{unit}.log",
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "read_distribution.py -r {input.bed} -i {input.bam} > {output} 2> {log}"
 
@@ -133,6 +145,8 @@ rule rseqc_readdup:
         prefix=lambda w, output: output[0].replace(".DupRate_plot.pdf", ""),
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "read_duplication.py -i {input} -o {params.prefix} > {log} 2>&1"
 
@@ -150,6 +164,8 @@ rule rseqc_readgc:
         prefix=lambda w, output: output[0].replace(".GC_plot.pdf", ""),
     conda:
         "../envs/rseqc.yaml"
+    envmodules:
+        "rseqc"
     shell:
         "read_GC.py -i {input} -o {params.prefix} > {log} 2>&1"
 
@@ -197,5 +213,9 @@ rule multiqc:
         "results/qc/multiqc_report.html",
     log:
         "logs/multiqc.log",
+    resources:
+        mem_mb=2000,
+    envmodules:
+        "multiqc"
     wrapper:
         "v0.75.0/bio/multiqc"
