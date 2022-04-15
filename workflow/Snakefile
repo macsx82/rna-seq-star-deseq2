@@ -12,7 +12,7 @@ min_version("6.4.1")
 ##### load rules #####
 include: "rules/common.smk"
 include: "rules/ref.smk"
-include: "rules/trim.smk"
+# include: "rules/trim.smk"
 include: "rules/qc.smk"
 include: "rules/align.smk"
 include: "rules/diffexp.smk"
