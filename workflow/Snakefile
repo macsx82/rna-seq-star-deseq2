@@ -13,11 +13,11 @@ min_version("6.4.1")
 include: "rules/common.smk"
 include: "rules/ref.smk"
 # include: "rules/trim.smk"
-include: "rules/qc.smk"
-include: "rules/align.smk"
-include: "rules/diffexp.smk"
-include: "rules/countmatrix.smk"
-include: "rules/genotyping.smk"
+# include: "rules/qc.smk"
+# include: "rules/align.smk"
+# include: "rules/diffexp.smk"
+# include: "rules/countmatrix.smk"
+# include: "rules/genotyping.smk"
 
 
 ##### target rules #####
