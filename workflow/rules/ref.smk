@@ -1,6 +1,6 @@
 rule get_genome:
     output:
-        "resources/genome.fasta",
+        config.get() + "resources/genome.fasta",
     log:
         "logs/get-genome.log",
     params:
@@ -53,7 +53,7 @@ rule bwa_index:
     input:
         "resources/genome.fasta",
     output:
-        multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        idx=multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
     params:
