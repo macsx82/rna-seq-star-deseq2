@@ -81,5 +81,7 @@ rule star_index:
     cache: True
     resources:
         mem_mb=20000,
+    envmodules:
+        "star"
     wrapper:
         "v1.3.2/bio/star/index"
