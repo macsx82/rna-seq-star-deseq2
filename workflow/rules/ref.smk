@@ -1,6 +1,6 @@
 rule get_genome:
     output:
-        config.get() + "resources/genome.fasta",
+        "resources/genome.fasta",
     log:
         "logs/get-genome.log",
     params:
