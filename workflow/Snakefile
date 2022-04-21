@@ -24,7 +24,10 @@ include: "rules/ref.smk"
 
 rule all:
     input:
-        "results/pca.pdf",
-        get_final_output(),
-        "results/counts/all_tpm.tsv",
-        "results/qc/multiqc_report.html",
+        "resources/genome.fasta.fai",
+        expand("resources/genome.fasta.{ext}", ext=[".amb", ".ann", ".bwt", ".pac", ".sa"]),
+        directory("resources/star_genome")
+        # "results/pca.pdf",
+        # get_final_output(),
+        # "results/counts/all_tpm.tsv",
+        # "results/qc/multiqc_report.html",
