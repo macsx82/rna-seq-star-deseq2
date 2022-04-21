@@ -25,7 +25,7 @@ include: "rules/ref.smk"
 rule all:
     input:
         "resources/genome.fasta.fai",
-        expand("resources/genome.fasta.{ext}", ext=[".amb", ".ann", ".bwt", ".pac", ".sa"]),
+        expand("resources/genome.fasta.{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
         directory("resources/star_genome")
         # "results/pca.pdf",
         # get_final_output(),
