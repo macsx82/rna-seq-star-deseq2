@@ -6,7 +6,7 @@ min_version("6.4.1")
 # this container defines the underlying OS for each job when using the workflow
 # with --use-conda --use-singularity
 #container: "docker://continuumio/miniconda3"
-workdir: config.get("workdir")
+# workdir: config.get("workdir")
 
 #define some global variables
 base_ref=config.get('paths').get('base_ref') + "/" + config["ref"]["species"] + "/" + config["ref"]["build"] + "/" + config["ref"]["release"] 
