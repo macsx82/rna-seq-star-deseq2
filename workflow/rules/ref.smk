@@ -40,7 +40,7 @@ rule get_annotation:
 
 rule genome_faidx:
     input:
-        rule.get_genome.output[0]
+        rules.get_genome.output[0]
         # "resources/genome.fasta",
     output:
         base_ref + "/" + ref_genome +".fai",
@@ -60,7 +60,7 @@ rule genome_faidx:
 
 rule bwa_index:
     input:
-        rule.get_genome.output[0]
+        rules.get_genome.output[0]
         # "resources/genome.fasta",
     output:
         idx=multiext(base_ref + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
@@ -81,8 +81,8 @@ rule bwa_index:
 
 rule star_index:
     input:
-        fasta=rule.get_genome.output[0],
-        annotation=rule.get_annotation.output[0],
+        fasta=rules.get_genome.output[0],
+        annotation=rules.get_annotation.output[0],
         # fasta="resources/genome.fasta",
         # annotation="resources/genome.gtf",
     output:
