@@ -9,6 +9,7 @@ min_version("6.4.1")
 workdir: config.get("workdir")
 
 #define some global variables
+base_ref=config.get('paths').get('base_ref') + "/" + config["ref"]["species"] + "/" + config["ref"]["build"] + "/" + config["ref"]["release"] 
 ref_genome=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".fasta"
 ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".gtf"
 
@@ -28,9 +29,9 @@ include: "rules/align.smk"
 rule all:
     input:
         # "resources/genome.fasta.fai",
-        config.get('paths').get('base_ref') + "/" + ref_genome+".fai",
-        expand(config.get('paths').get('base_ref') + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
-        directory(config.get('paths').get('base_ref') + "/star_genome")
+        base_ref + "/" + ref_genome+".fai",
+        expand(base_ref + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
+        directory(base_ref + "/star_genome")
         # "results/pca.pdf",
         # get_final_output(),
         # "results/counts/all_tpm.tsv",

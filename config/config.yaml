@@ -7,7 +7,7 @@ units: config/units.tsv
 
 #define paths for available resources or to generate them (basically the reference genome)
 paths:
-  base_ref: ""
+  base_ref: "/shared/resources/references"
   base_out: ""
 
 ref:

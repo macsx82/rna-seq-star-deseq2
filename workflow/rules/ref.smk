@@ -1,7 +1,7 @@
 #download the selected version of the reference genome using ensembl
 rule get_genome:
     output:
-        config.get('paths').get('base_ref') + "/" + ref_genome
+        base_ref + "/" + ref_genome
         # "resources/genome.fasta",
     log:
         "logs/get-genome.log",
@@ -20,7 +20,7 @@ rule get_genome:
 
 rule get_annotation:
     output:
-        config.get('paths').get('base_ref') + "/" + ref_annots
+        base_ref + "/" + ref_annots
         # "resources/genome.gtf",
     params:
         species=config["ref"]["species"],
@@ -43,7 +43,7 @@ rule genome_faidx:
         rule.get_genome.output[0]
         # "resources/genome.fasta",
     output:
-        config.get('paths').get('base_ref') + "/" + ref_genome +".fai",
+        base_ref + "/" + ref_genome +".fai",
         # "resources/genome.fasta.fai",
     log:
         "logs/genome-faidx.log",
@@ -63,7 +63,7 @@ rule bwa_index:
         rule.get_genome.output[0]
         # "resources/genome.fasta",
     output:
-        idx=multiext(config.get('paths').get('base_ref') + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        idx=multiext(base_ref + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
         # idx=multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
@@ -86,7 +86,7 @@ rule star_index:
         # fasta="resources/genome.fasta",
         # annotation="resources/genome.gtf",
     output:
-        directory(config.get('paths').get('base_ref') + "/star_genome"),
+        directory(base_ref + "/star_genome"),
     threads: 8
     params:
         extra="--sjdbGTFfile {input.annotation} --sjdbOverhang 100",
