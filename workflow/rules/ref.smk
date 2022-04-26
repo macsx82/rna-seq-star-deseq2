@@ -1,6 +1,8 @@
+#download the selected version of the reference genome using ensembl
 rule get_genome:
     output:
-        "resources/genome.fasta",
+        config.get('paths').get('base_ref') + "/" + ref_genome
+        # "resources/genome.fasta",
     log:
         "logs/get-genome.log",
     params:
@@ -9,6 +11,7 @@ rule get_genome:
         build=config["ref"]["build"],
         release=config["ref"]["release"],
     cache: True
+    threads: 1
     resources:
         mem_mb=2000,
     wrapper:
@@ -17,7 +20,8 @@ rule get_genome:
 
 rule get_annotation:
     output:
-        "resources/genome.gtf",
+        config.get('paths').get('base_ref') + "/" + ref_annots
+        # "resources/genome.gtf",
     params:
         species=config["ref"]["species"],
         fmt="gtf",
@@ -25,6 +29,7 @@ rule get_annotation:
         release=config["ref"]["release"],
         flavor="",
     cache: True
+    threads: 1
     log:
         "logs/get_annotation.log",
     resources:
@@ -35,29 +40,36 @@ rule get_annotation:
 
 rule genome_faidx:
     input:
-        "resources/genome.fasta",
+        rule.get_genome.output[0]
+        # "resources/genome.fasta",
     output:
-        "resources/genome.fasta.fai",
+        config.get('paths').get('base_ref') + "/" + ref_genome +".fai",
+        # "resources/genome.fasta.fai",
     log:
         "logs/genome-faidx.log",
     cache: True
+    threads: 1
     resources:
         mem_mb=20000,
     envmodules:
         "samtools"
-    wrapper:
-        "v1.3.2/bio/samtools/faidx"
-
+    shell:
+        """
+        samtools faidx {input[0]} 2>&1 {log[0]}
+        """
 
 rule bwa_index:
     input:
-        "resources/genome.fasta",
+        rule.get_genome.output[0]
+        # "resources/genome.fasta",
     output:
-        idx=multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        idx=multiext(config.get('paths').get('base_ref') + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        # idx=multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
     params:
         algorithm="bwtsw",
+    threads: 1
     resources:
         mem_mb=40000,
     cache: True
@@ -69,13 +81,16 @@ rule bwa_index:
 
 rule star_index:
     input:
-        fasta="resources/genome.fasta",
-        annotation="resources/genome.gtf",
+        fasta=rule.get_genome.output[0],
+        annotation=rule.get_annotation.output[0],
+        # fasta="resources/genome.fasta",
+        # annotation="resources/genome.gtf",
     output:
-        directory("resources/star_genome"),
-    threads: 4
+        directory(config.get('paths').get('base_ref') + "/star_genome"),
+    threads: 8
     params:
-        extra="--sjdbGTFfile resources/genome.gtf --sjdbOverhang 100",
+        extra="--sjdbGTFfile {input.annotation} --sjdbOverhang 100",
+        # extra="--sjdbGTFfile resources/genome.gtf --sjdbOverhang 100",
     log:
         "logs/star_index_genome.log",
     cache: True

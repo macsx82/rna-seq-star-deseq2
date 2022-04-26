@@ -5,6 +5,10 @@ samples: config/samples.tsv
 # sample).
 units: config/units.tsv
 
+#define paths for available resources or to generate them (basically the reference genome)
+paths:
+  base_ref: ""
+  base_out: ""
 
 ref:
   # Ensembl species name [homo_sapiens, or mus_musculus]

@@ -6,15 +6,18 @@ min_version("6.4.1")
 # this container defines the underlying OS for each job when using the workflow
 # with --use-conda --use-singularity
 #container: "docker://continuumio/miniconda3"
+workdir: config.get("workdir")
 
-
+#define some global variables
+ref_genome=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".fasta"
+ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".gtf"
 
 ##### load rules #####
 include: "rules/common.smk"
 include: "rules/ref.smk"
 # include: "rules/trim.smk"
+include: "rules/align.smk"
 # include: "rules/qc.smk"
-# include: "rules/align.smk"
 # include: "rules/diffexp.smk"
 # include: "rules/countmatrix.smk"
 # include: "rules/genotyping.smk"
@@ -24,9 +27,10 @@ include: "rules/ref.smk"
 
 rule all:
     input:
-        "resources/genome.fasta.fai",
-        expand("resources/genome.fasta.{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
-        directory("resources/star_genome")
+        # "resources/genome.fasta.fai",
+        config.get('paths').get('base_ref') + "/" + ref_genome+".fai",
+        expand(config.get('paths').get('base_ref') + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
+        directory(config.get('paths').get('base_ref') + "/star_genome")
         # "results/pca.pdf",
         # get_final_output(),
         # "results/counts/all_tpm.tsv",
