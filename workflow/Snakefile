@@ -17,7 +17,7 @@ ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(c
 include: "rules/common.smk"
 include: "rules/ref.smk"
 # include: "rules/trim.smk"
-include: "rules/align.smk"
+# include: "rules/align.smk"
 # include: "rules/qc.smk"
 # include: "rules/diffexp.smk"
 # include: "rules/countmatrix.smk"
