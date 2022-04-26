@@ -9,9 +9,9 @@ min_version("6.4.1")
 # workdir: config.get("workdir")
 
 #define some global variables
-base_ref=config.get('paths').get('base_ref') + "/" + config["ref"]["species"] + "/" + config["ref"]["build"] + "/" + config["ref"]["release"] 
-ref_genome=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".fasta"
-ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + config["ref"]["release"] + ".gtf"
+base_ref=config.get('paths').get('base_ref') + "/" + config["ref"]["species"] + "/" + config["ref"]["build"] + "/" + str(config["ref"]["release"]) 
+ref_genome=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(config["ref"]["release"]) + ".fasta"
+ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(config["ref"]["release"]) + ".gtf"
 
 ##### load rules #####
 include: "rules/common.smk"

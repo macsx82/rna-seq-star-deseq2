@@ -12,11 +12,11 @@ paths:
 
 ref:
   # Ensembl species name [homo_sapiens, or mus_musculus]
-  species: homo_sapiens
+  species: "homo_sapiens"
   # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)
   release: 100
   # Genome build
-  build: GRCh38
+  build: "GRCh38"
 
 ref_index:
   bwa-index: "ref/genomes/human/GRCh38/BWAIndex"
