@@ -82,7 +82,7 @@ rule bwa_index:
 rule star_index:
     input:
         fasta=rules.get_genome.output[0],
-        annotation=rules.get_annotation.output[0],
+        annotation=rules.get_annotation.output[0]
         # fasta="resources/genome.fasta",
         # annotation="resources/genome.gtf",
     output:
