@@ -89,7 +89,7 @@ rule star_index:
         directory(base_ref + "/star_genome"),
     threads: 8
     params:
-        extra=lambda input: "--sjdbGTFfile " + input[1] + " --sjdbOverhang 100",
+        extra=lambda input: join("--sjdbGTFfile " + input[1] + " --sjdbOverhang 100"),
         # extra="--sjdbGTFfile resources/genome.gtf --sjdbOverhang 100",
     log:
         "logs/star_index_genome.log",
