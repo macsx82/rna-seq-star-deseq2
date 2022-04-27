@@ -55,7 +55,7 @@ rule genome_faidx:
         "samtools"
     shell:
         """
-        samtools faidx {input[0]} 2>&1 {log[0]}
+        samtools faidx {input[0]} 2> {log[0]}
         """
 
 rule bwa_index:
@@ -89,7 +89,7 @@ rule star_index:
         directory(base_ref + "/star_genome"),
     threads: 8
     params:
-        extra="--sjdbGTFfile {input.annotation} --sjdbOverhang 100",
+        extra=lambda input: "--sjdbGTFfile {input.annotation} --sjdbOverhang 100",
         # extra="--sjdbGTFfile resources/genome.gtf --sjdbOverhang 100",
     log:
         "logs/star_index_genome.log",
