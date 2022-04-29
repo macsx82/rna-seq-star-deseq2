@@ -3,8 +3,8 @@ import pandas as pd
 from snakemake.utils import validate
 #from snakemake.remote import FTP
 #ftp = FTP.RemoteProvider()
-configfile: "config/config.yaml"
-validate(config, schema="../schemas/config.schema.yaml")
+# configfile: "config/config.yaml"
+# validate(config, schema="../schemas/config.schema.yaml")
 
 samples = (
     pd.read_csv(config["samples"], sep="\t", dtype={"sample_name": str})
@@ -143,8 +143,8 @@ def get_star_output_all_units(wildcards, fi="counts"):
         else:
             lib = "se"
         res.append(
-            "results/star/{}/{}-{}/{}".format(
-                lib, unit.sample_name, unit.unit_name, outfile
+            "{}/1.STAR_ALIGN/{}/{}-{}/{}".format(
+                config.get("star").get("base_out"),lib, unit.sample_name, unit.unit_name, outfile
             )
         )
     return res

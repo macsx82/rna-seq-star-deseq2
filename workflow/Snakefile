@@ -17,7 +17,7 @@ ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(c
 include: "rules/common.smk"
 include: "rules/ref.smk"
 # include: "rules/trim.smk"
-# include: "rules/align.smk"
+include: "rules/align.smk"
 # include: "rules/qc.smk"
 # include: "rules/diffexp.smk"
 # include: "rules/countmatrix.smk"
@@ -31,7 +31,12 @@ rule all:
         # "resources/genome.fasta.fai",
         base_ref + "/" + ref_genome+".fai",
         expand(base_ref + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
-        directory(base_ref + "/star_genome")
+        directory(base_ref + "/star_genome"),
+        get_star_output_all_units()
+        # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
+        # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
+        # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/ReadsPerGene.out.tab",
+
         # "results/pca.pdf",
         # get_final_output(),
         # "results/counts/all_tpm.tsv",
