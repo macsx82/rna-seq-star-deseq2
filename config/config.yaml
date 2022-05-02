@@ -68,6 +68,7 @@ star:
   star-genome: "/shared/resources/references/star_genome"
   gtf: "/cluster/projects/cesconlab/References/STAR/GRCh38/GTF/genome.gtf"
   base_out: ""
-  # Extra params added for STARv2, there are already hardcoded parames in workflow/rules/align.smk
-  params: "--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --alignIntronMin 30 --alignIntronMax 1200000 --outSAMunmapped Within"
-  extra: "--quantMode GeneCounts TranscriptomeSAM --outFilterIntronMotifs RemoveNoncanonical --chimSegmentMin 10 --chimOutType SeparateSAMold"
+  # Extra params added for STARv2
+  params: "--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --alignIntronMin 30 --alignIntronMax 1200000 --outSAMunmapped Within" #
+  extra: "" #parametrs to activate additional features of STAR, such as reads counting and the chimeric alignment. Some examples below
+  # extra: "--quantMode GeneCounts TranscriptomeSAM --outFilterIntronMotifs RemoveNoncanonical --chimSegmentMin 10 --chimOutType Junctions"
