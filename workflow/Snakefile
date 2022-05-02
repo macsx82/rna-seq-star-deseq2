@@ -24,7 +24,7 @@ include: "rules/align.smk"
 # include: "rules/countmatrix.smk"
 # include: "rules/genotyping.smk"
 sample_names = list(samples.sample_name)
-unit_names = list(units.unit_name)
+unit_names = list(set(list(units.unit_name)))
 print(sample_names)
 print(unit_names)
 
@@ -36,7 +36,7 @@ rule all:
         base_ref + "/" + ref_genome+".fai",
         expand(base_ref + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
         directory(base_ref + "/star_genome"),
-        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",
+        expand(BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",sample=sample_names,unit=unit_names)
         # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
         # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
         # config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/ReadsPerGene.out.tab",
