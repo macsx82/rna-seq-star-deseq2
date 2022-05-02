@@ -12,7 +12,7 @@ rule align_pe:
         "logs/star-pe/{sample}-{unit}.log",
         "logs/star-pe/{sample}-{unit}.err"
     params:
-        # index=config["star"]["star-genome"],
+        star_dir=config["star"]["star-genome"],
         extra=config["star"]["extra"],
         star_options=config["star"]["params"],
         tmpdir=config["paths"]["tmp"],
@@ -25,7 +25,7 @@ rule align_pe:
     shell:
         """
         temp=$(mktemp -u -d -p {params.tmpdir})
-        STAR --runThreadN {threads} --genomeDir {input.ref_fasta} --sjdbGTFfile {input.annotation} --readFilesIn {input.fq1} {input.fq2} {params.star_options} {params.extra} --outTmpDir ${{temp}} --outFileNamePrefix {params.out_prefix} --outStd Log 1> {log[0]} 2> {log[1]}
+        STAR --runThreadN {threads} --genomeDir {params.star_dir} --sjdbGTFfile {input.annotation} --readFilesIn {input.fq1} {input.fq2} {params.star_options} {params.extra} --outTmpDir ${{temp}} --outFileNamePrefix {params.out_prefix} --outStd Log 1> {log[0]} 2> {log[1]}
         """
     # wrapper:
     #     "v1.3.2/bio/star/align"
