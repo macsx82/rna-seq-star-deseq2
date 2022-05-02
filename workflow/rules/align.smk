@@ -13,9 +13,9 @@ rule align_pe:
         "logs/star-pe/{sample}-{unit}.err"
     params:
         # index=config["star"]["star-genome"],
-        extra=config["star"]["extra"]
-        star_options=config["star"]["params"]
-        tmpdir=config["paths"]["tmp"]
+        extra=config["star"]["extra"],
+        star_options=config["star"]["params"],
+        tmpdir=config["paths"]["tmp"],
         out_prefix=config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/"
     threads: 12
     resources:
