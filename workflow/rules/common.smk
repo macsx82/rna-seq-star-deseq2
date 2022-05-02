@@ -144,7 +144,7 @@ def get_star_output_all_units(wildcards, fi="counts"):
             lib = "se"
         res.append(
             "{}/1.STAR_ALIGN/{}/{}-{}/{}".format(
-                config.get("star").get("base_out"),lib, unit.sample_name, unit.unit_name, outfile
+                BASE_OUT,lib, unit.sample_name, unit.unit_name, outfile
             )
         )
     return res

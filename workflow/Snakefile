@@ -23,8 +23,10 @@ include: "rules/align.smk"
 # include: "rules/diffexp.smk"
 # include: "rules/countmatrix.smk"
 # include: "rules/genotyping.smk"
-print(samples)
-print(units)
+sample_names = list(samples.sample_name)
+unit_names = list(units.unit_name)
+print(sample_names)
+print(unit_names)
 
 ##### target rules #####
 
