@@ -5,18 +5,18 @@ rule align_pe:
         ref_fasta=rules.get_genome.output[0],
         annotation=rules.get_annotation.output[0],
     output:
-        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit_name}/Aligned.sortedByCoord.out.bam",
-        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit_name}/Aligned.toTranscriptome.out.bam",
-        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit_name}/ReadsPerGene.out.tab",
+        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
+        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
+        BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/ReadsPerGene.out.tab",
     log:
-        "logs/star-pe/{sample}-{unit_name}.log",
-        "logs/star-pe/{sample}-{unit_name}.err"
+        "logs/star-pe/{sample}-{unit}.log",
+        "logs/star-pe/{sample}-{unit}.err"
     params:
         # index=config["star"]["star-genome"],
         extra=config["star"]["extra"],
         star_options=config["star"]["params"],
         tmpdir=config["paths"]["tmp"],
-        out_prefix=config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit_name}/"
+        out_prefix=config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/"
     threads: 12
     resources:
         mem_mb=20000,
