@@ -5,9 +5,9 @@ rule align_pe:
         ref_fasta=rules.get_genome.output[0],
         annotation=rules.get_annotation.output[0],
     output:
-        config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
-        config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
-        config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/ReadsPerGene.out.tab",
+        config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
+        config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
+        config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/ReadsPerGene.out.tab",
     log:
         "logs/star-pe/{sample}-{unit}.log",
         "logs/star-pe/{sample}-{unit}.err"
@@ -74,7 +74,7 @@ rule index_coord:
     input:
         get_star_bam,
     output:
-        config.get("star").get("base_out") + "/1.STAR_ALIGN/{ends}/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",
+        config.get("paths").get("base_out") + "/1.STAR_ALIGN/{ends}/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",
     log:
         "logs/{sample}-{unit}.{ends}.sortedByCoord.log"
     threads: 1        

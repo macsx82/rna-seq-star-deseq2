@@ -13,6 +13,7 @@ base_ref=config.get('paths').get('base_ref') + "/" + config["ref"]["species"] + 
 ref_genome=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(config["ref"]["release"]) + ".fasta"
 ref_annots=config["ref"]["species"] + "." + config["ref"]["build"] + "." + str(config["ref"]["release"]) + ".gtf"
 
+BASE_OUT=config.get("paths").get("base_out")
 ##### load rules #####
 include: "rules/common.smk"
 include: "rules/ref.smk"

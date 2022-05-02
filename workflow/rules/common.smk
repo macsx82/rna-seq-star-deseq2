@@ -154,17 +154,18 @@ def get_star_transcriptome(wildcards):
         lib = "pe"
     else:
         lib = "se"
-    return "results/star/{}/{}-{}/Aligned.toTranscriptome.out.bam".format(
-        lib, wildcards.sample, wildcards.unit
+    return "{}/1.STAR_ALIGN/{}/{}-{}/Aligned.toTranscriptome.out.bam".format(
+        BASE_OUT,lib, wildcards.sample, wildcards.unit
     )
+
 
 def get_star_bai(wildcards):
     if is_paired_end(wildcards.sample):
         lib = "pe"
     else:
         lib = "se"
-    return "results/star/{}/{}-{}/Aligned.sortedByCoord.out.bam.bai".format(
-        lib, wildcards.sample, wildcards.unit
+    return "{}/1.STAR_ALIGN/{}/{}-{}/Aligned.sortedByCoord.out.bam.bai".format(
+        BASE_OUT,lib, wildcards.sample, wildcards.unit
     )
 
 def get_star_bam(wildcards):
@@ -172,8 +173,8 @@ def get_star_bam(wildcards):
         lib = "pe"
     else:
         lib = "se"
-    return "results/star/{}/{}-{}/Aligned.sortedByCoord.out.bam".format(
-        lib, wildcards.sample, wildcards.unit
+    return "{}/1.STAR_ALIGN/{}/{}-{}/Aligned.sortedByCoord.out.bam".format(
+        BASE_OUT,lib, wildcards.sample, wildcards.unit
     )
 
 def get_rg_bam(wildcards):
@@ -181,8 +182,8 @@ def get_rg_bam(wildcards):
         lib = "pe"
     else:
         lib = "se"
-    return "results/star/{}/{}-{}/Aligned.rg.bam".format(
-        lib, wildcards.sample, wildcards.unit
+    return "{}/1.STAR_ALIGN/{}/{}-{}/Aligned.rg.bam".format(
+        BASE_OUT,lib, wildcards.sample, wildcards.unit
     )
 
 def get_rg_bai(wildcards):
@@ -190,8 +191,8 @@ def get_rg_bai(wildcards):
         lib = "pe"
     else:
         lib = "se"
-    return "results/star/{}/{}-{}/Aligned.rg.bam.bai".format(
-        lib, wildcards.sample, wildcards.unit
+    return "{}/1.STAR_ALIGN/{}/{}-{}/Aligned.rg.bam.bai".format(
+        BASE_OUT,lib, wildcards.sample, wildcards.unit
     )
 
 def get_strandedness(units):

@@ -67,7 +67,6 @@ gsea:
 star:
   star-genome: "/shared/resources/references/star_genome"
   gtf: "/cluster/projects/cesconlab/References/STAR/GRCh38/GTF/genome.gtf"
-  base_out: ""
   # Extra params added for STARv2
   params: "--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --alignIntronMin 30 --alignIntronMax 1200000 --outSAMunmapped Within"
   extra: "" #parametrs to activate additional features of STAR, such as reads counting and the chimeric alignment. Some examples below
