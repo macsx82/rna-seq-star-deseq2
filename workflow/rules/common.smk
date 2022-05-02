@@ -101,6 +101,30 @@ def get_map_reads_input_R1(wildcards):
         return "results/merged/{sample}_R1.fastq.gz"
     return "results/merged/{sample}_single.fastq.gz"
 
+#rewrite in a simple way
+# def get_map_reads_input_R1(wildcards):
+#     unit = units.loc[wildcards.unit_name]
+#     sample_units = unit.loc[wildcards.sample]
+#     print(sample_units)
+#     return sample_units["fq1"]
+
+#     if not is_activated("mergeReads"):
+#         if config["trimming"]["activate"]:
+#             return expand(
+#                 "results/trimmed/{sample}_{unit}_R1.fastq.gz",
+#                 unit=units.loc[wildcards.sample, "unit_name"],
+#                 sample=wildcards.sample,
+#             )
+#         if all(pd.isna(unit["fq1"])):
+#             # SRA sample (always paired-end for now)
+#             accession = unit["sra"]
+#             return expand("sra/{accession}_R1.fastq", accession=accession)
+#         sample_units = units.loc[wildcards.sample]
+#         return sample_units["fq1"]
+#     if is_paired_end(wildcards.sample):
+#         return "results/merged/{sample}_R1.fastq.gz"
+#     return "results/merged/{sample}_single.fastq.gz"
+
 
 def get_map_reads_input_R2(wildcards):
     if is_paired_end(wildcards.sample):
