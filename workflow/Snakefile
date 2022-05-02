@@ -23,6 +23,7 @@ include: "rules/align.smk"
 # include: "rules/diffexp.smk"
 # include: "rules/countmatrix.smk"
 # include: "rules/genotyping.smk"
+print(samples)
 print(units)
 
 ##### target rules #####
