@@ -16,7 +16,7 @@ rule align_pe:
         extra=config["star"]["extra"],
         star_options=config["star"]["params"],
         tmpdir=config["paths"]["tmp"],
-        out_prefix=config.get("star").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/"
+        out_prefix=config.get("paths").get("base_out") + "/1.STAR_ALIGN/pe/{sample}-{unit}/"
     threads: 12
     resources:
         mem_mb=20000,
