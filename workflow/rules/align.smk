@@ -84,5 +84,5 @@ rule index_coord:
         "samtools"
     shell:
         """
-        samtools index {input[0]} 2>&1 {log}
+        samtools index {input[0]} 2> {log}
         """
