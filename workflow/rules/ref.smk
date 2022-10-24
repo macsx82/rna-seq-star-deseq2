@@ -15,7 +15,7 @@ rule get_genome:
     resources:
         mem_mb=2000,
     wrapper:
-        "v1.3.2/bio/reference/ensembl-sequence"
+        "v1.17.2/bio/reference/ensembl-sequence"
 
 
 rule get_annotation:
@@ -35,7 +35,7 @@ rule get_annotation:
     resources:
         mem_mb=2000,
     wrapper:
-        "v1.3.2/bio/reference/ensembl-annotation"
+        "v1.17.2/bio/reference/ensembl-annotation"
 
 
 rule genome_faidx:
@@ -76,7 +76,7 @@ rule bwa_index:
     envmodules:
         "bwa"
     wrapper:
-        "v1.3.2/bio/bwa/index"
+        "v1.17.2/bio/bwa/index"
 
 
 rule star_index:
@@ -99,4 +99,4 @@ rule star_index:
     envmodules:
         "star"
     wrapper:
-        "v1.3.2/bio/star/index"
+        "v1.17.2/bio/star/index"
