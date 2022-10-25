@@ -9,6 +9,7 @@ units: config/units.tsv
 paths:
   base_ref: "/shared/resources/references"
   base_out: ""
+  base_scripts: ""
   tmp: ""
 
 ref:
@@ -23,7 +24,7 @@ ref_index:
   bwa-index: "ref/genomes/human/GRCh38/BWAIndex"
   genome: "ref/genomes/human/GRCh38/genome.fa"
   # This reference file is made from rsem-prepare-reference, it will generate the reference.seq is not found
-  rsem: "ref/RSEM/GRCh38/"
+  rsem: "/data/resources/references/homo_sapiens/GRCh38/108"
 
 trimming:
   # Should not be trimming RNAseq data, especially for STAR2, I haven't tested True

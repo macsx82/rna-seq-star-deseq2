@@ -73,8 +73,10 @@ rule align_pe:
 rule index_coord:
     input:
         get_star_bam,
+        get_star_transcriptome
     output:
         BASE_OUT + "/1.STAR_ALIGN/{ends}/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",
+        BASE_OUT + "/1.STAR_ALIGN/{ends}/{sample}-{unit}/Aligned.toTranscriptome.out.bam.bai"
     log:
         "logs/{sample}-{unit}.{ends}.sortedByCoord.log"
     threads: 1        
@@ -85,4 +87,5 @@ rule index_coord:
     shell:
         """
         samtools index {input[0]} 2> {log}
+        samtools index {input[1]} 2>> {log}
         """

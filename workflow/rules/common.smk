@@ -134,7 +134,7 @@ def get_rsem_output_all_units(wildcards):
     res = []
     for unit in units.itertuples():
         res.append(
-            "{}/rsem/{}-{}.genes.results".format(
+            "{}/2.RSEM/{}-{}.genes.results".format(
                 BASE_OUT,unit.sample_name, unit.unit_name
             )
         )
