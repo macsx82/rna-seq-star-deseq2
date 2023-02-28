@@ -71,8 +71,9 @@ rule calculate_expression:
   params:
     outprefix=BASE_OUT + "/2.RSEM/{sample}-{unit}",
     paired_end=lambda w: "--paired-end" if is_paired_end(w.sample) else "",
-    extra="--bam --estimate-rspd --output-genome-bam --time --forward-prob 0 --seed 42",
-  threads: 2
+    # extra="--bam --estimate-rspd --output-genome-bam --time --forward-prob 0 --seed 42",
+    extra="--estimate-rspd --output-genome-bam --time --seed 42",
+  threads: 4
   resources:
     mem_mb=5000
   log:
@@ -82,8 +83,7 @@ rule calculate_expression:
   shell:
     """
     ref=$(echo {input.reference} | sed 's/\\..*//');
-    # module load rsem/1.3.0;
-    rsem-calculate-expression --num-threads {threads} {params.extra} {params.paired_end} {input.bam} $ref {params.outprefix} > {log} 2>&1
+    rsem-calculate-expression --num-threads {threads} {params.extra} --alignments {params.paired_end} {input.bam} $ref {params.outprefix} > {log} 2>&1
     """
 
 #rule rsem_generate_data_matrix:
@@ -115,7 +115,6 @@ rule rsem_generate_data_matrix:
     "rsem"
   shell:
     """
-    # module load rsem/1.3.0;
     rsem-generate-data-matrix {params.extra} {input} > {output} 2>{log}
     """
 
@@ -145,6 +144,7 @@ rule rsem_generate_tpm_matrix:
     temp(BASE_OUT+ "/2.RSEM/counts/all_tpm.tmp"),
   params:
     extra="TPM",
+    scripts_path=BASE_SCRIPTS
   log:
     "logs/rsem/rsem_generate_tpm_matrix.log",
   threads: 1
@@ -154,8 +154,7 @@ rule rsem_generate_tpm_matrix:
     "rsem"
   shell:
     """
-    # module load rsem/1.3.0
-    perl scripts/rsem-generate-data-matrix-modified.pl {params.extra} {input} > {output} 2>{log}
+    perl {params.scripts_path}/rsem-generate-data-matrix-modified.pl {params.extra} {input} > {output} 2>{log}
     """
 
 rule format_tpm_matrix:
