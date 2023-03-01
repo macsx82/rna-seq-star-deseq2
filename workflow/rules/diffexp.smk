@@ -16,7 +16,7 @@ rule count_matrix:
     # conda:
     #     "../envs/pandas.yaml"
     envmodules:
-        "python/3.10.3"
+        "python"
     script:
         "{params.scripts_path}/count-matrix.py"
 
