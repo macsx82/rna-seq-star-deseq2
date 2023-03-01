@@ -87,5 +87,4 @@ rule index_coord:
     shell:
         """
         samtools index {input[0]} 2> {log}
-        # samtools index {input[1]} 2>> {log}
         """
