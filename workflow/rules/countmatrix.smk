@@ -72,7 +72,7 @@ rule calculate_expression:
     outprefix=BASE_OUT + "/2.RSEM/{sample}-{unit}",
     paired_end=lambda w: "--paired-end" if is_paired_end(w.sample) else "",
     # extra="--bam --estimate-rspd --output-genome-bam --time --forward-prob 0 --seed 42",
-    extra="--estimate-rspd --output-genome-bam --time --seed 42",
+    extra="--estimate-rspd --calc-ci --calc-pme --output-genome-bam --time --seed 42",
   threads: 4
   resources:
     mem_mb=5000

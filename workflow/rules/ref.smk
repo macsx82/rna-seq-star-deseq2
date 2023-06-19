@@ -63,20 +63,20 @@ rule bwa_index:
         rules.get_genome.output[0]
         # "resources/genome.fasta",
     output:
-        idx=multiext(base_ref + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
-        # idx=multiext("resources/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        idx=multiext(base_ref + "/" + ref_genome, ".amb", ".ann", ".bwt.2bit.64", ".pac", ".0123"),
+        # idx=multiext(base_ref + "/" + ref_genome, ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
-    params:
-        algorithm="bwtsw",
+    # params:
+    #     algorithm="bwtsw",
     threads: 1
     resources:
         mem_mb=40000,
     cache: True
     envmodules:
-        "bwa"
+        "bwa-mem2"
     wrapper:
-        "v1.17.2/bio/bwa/index"
+        "v1.17.2/bio/bwa-mem2/index"
 
 
 rule star_index:
