@@ -74,7 +74,7 @@ rule bwa_index:
         mem_mb=40000,
     cache: True
     envmodules:
-        "bwa-mem2"
+        "bwamem2"
     wrapper:
         "v1.17.2/bio/bwa-mem2/index"
 
