@@ -35,7 +35,7 @@ rule all:
     input:
         # "resources/genome.fasta.fai",
         base_ref + "/" + ref_genome+".fai",
-        expand(base_ref + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt", "pac", "sa"]),
+        expand(base_ref + "/" + ref_genome+".{ext}", ext=["amb", "ann", "bwt.2bit.64", "pac", "0123"]),
         directory(base_ref + "/star_genome"),
         expand(BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam.bai",sample=sample_names,unit=unit_names),
         # expand(BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam.bai",sample=sample_names,unit=unit_names),
