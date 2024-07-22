@@ -59,6 +59,9 @@ params:
 
 rsem:
   refpath: ""
+  extra: "--estimate-rspd --calc-ci --calc-pme --output-genome-bam --time --seed 42" #parameters to activate additional features in RSEM, like take into account data strandedness, 
+            #for example adding "--forward-prob 0" is equivalent to reverse stranded (1+-,1-+,2++,2–)
+            #while "--forward-prob 1" is equivalent to direct stranded (1++,1–,2+-,2-+)
 gsea:
   # Only include genes with an expression above this value for GSEA (set to 0)
   min_base_mean: 50
