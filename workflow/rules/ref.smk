@@ -86,8 +86,8 @@ rule star_index:
         # fasta="resources/genome.fasta",
         # annotation="resources/genome.gtf",
     output:
-        directory(base_ref + "/star_genome"),
-        touch(base_ref + "/star_genome/done.txt")
+        directory(base_ref + "/star_genome")
+        # touch(base_ref + "/star_genome/done.txt")
     threads: 8
     params:
         # extra=lambda input: " ".join("--sjdbGTFfile", input[1],"--sjdbOverhang 100"),
