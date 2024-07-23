@@ -4,6 +4,7 @@ rule align_pe:
         fq2=get_map_reads_input_R2,
         ref_fasta=rules.get_genome.output[0],
         annotation=rules.get_annotation.output[0],
+        rules.star_index.output[1]
     output:
         BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
         BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
