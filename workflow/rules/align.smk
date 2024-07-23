@@ -1,10 +1,10 @@
 rule align_pe:
     input:
+        config["star"]["star-genome"] + "/genomeParameters.txt", #added to ensure that the star_index rule has run already
         fq1=get_map_reads_input_R1,
         fq2=get_map_reads_input_R2,
         ref_fasta=rules.get_genome.output[0],
-        annotation=rules.get_annotation.output[0],
-        config["star"]["star-genome"] + "/genomeParameters.txt" #added to ensure that the star_index rule has run already
+        annotation=rules.get_annotation.output[0]
     output:
         BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.sortedByCoord.out.bam",
         BASE_OUT + "/1.STAR_ALIGN/pe/{sample}-{unit}/Aligned.toTranscriptome.out.bam",
